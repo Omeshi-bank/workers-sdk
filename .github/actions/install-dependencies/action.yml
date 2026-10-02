@@ -37,12 +37,17 @@ runs:
     - name: "Configure turbo repo cache environment variables"
       if: inputs.turbo-api
       shell: bash
+      env:
+        TURBO_API_INPUT: ${{ inputs.turbo-api }}
+        TURBO_TEAM_INPUT: ${{ inputs.turbo-team }}
+        TURBO_TOKEN_INPUT: ${{ inputs.turbo-token }}
+        TURBO_SIGNATURE_INPUT: ${{ inputs.turbo-signature }}
       run: |
         touch .env
-        echo TURBO_API=${{ inputs.turbo-api }} >> .env
-        echo TURBO_TEAM=${{ inputs.turbo-team }} >> .env
-        echo TURBO_TOKEN=${{ inputs.turbo-token }} >> .env
-        echo TURBO_REMOTE_CACHE_SIGNATURE_KEY=${{ inputs.turbo-signature }} >> .env
+        echo TURBO_API=$TURBO_API_INPUT >> .env
+        echo TURBO_TEAM=$TURBO_TEAM_INPUT >> .env
+        echo TURBO_TOKEN=$TURBO_TOKEN_INPUT >> .env
+        echo TURBO_REMOTE_CACHE_SIGNATURE_KEY=$TURBO_SIGNATURE_INPUT >> .env
         echo TURBO_ENV_MODE=loose >> .env
 
     - name: Install NPM Dependencies
